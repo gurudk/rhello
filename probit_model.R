@@ -14,7 +14,8 @@ probit_model <- function(data_sample){
   result <- optim(c(1,1,1), fn <- function(beta){
     ll_value = 0
     for(i in c(1:rows)){
-      ll_value <- ll_value + y[i]*log(pnorm(x[i,] %*% beta,0,1)) + (1-y[i])*(log(1-pnorm(x[i,] %*% beta,0,1)))
+      ll_value <- ll_value + y[i]*log(pnorm(x[i,] %*% beta,0,1)) + 
+        (1-y[i])*(log(1-pnorm(x[i,] %*% beta,0,1)))
     }
     
     return(-ll_value)    
@@ -52,7 +53,8 @@ variance <- function(estimation_result, data_sample){
   v <- matrix(0,nrow = length(beta_est), ncol = length(beta_est))
   for(i in c(1:rows)){
     xbeta <- x[i,] %*% beta_est
-    v <- v + as.numeric((dnorm(xbeta)^2/(pnorm(xbeta)*(1-pnorm(xbeta))))) * (x[i,] %*% t(x[i,]))
+    v <- v + as.numeric((dnorm(xbeta)^2/(pnorm(xbeta)*(1-pnorm(xbeta)))))
+      * (x[i,] %*% t(x[i,]))
   }
   
   return(v/rows)
