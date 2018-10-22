@@ -8,7 +8,7 @@ weiner_process <-function(T, n){
   delta = T/n
   W <- array(0,T)
   for(t in c(2:n)){
-    W[t] <- W[t-1] + rnorm(1,0,1) * sqrt(delta)
+    W[t] <- W[t-1] + rnorm(1, 0, sqrt(delta))
   }
   
   return(W)
